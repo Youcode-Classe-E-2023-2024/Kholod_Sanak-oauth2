@@ -19,13 +19,46 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-Route::apiResource('users', UserController::class);
+
+/*
+|--------------------------------------------------------------------------
+| CRUD USERS
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware('auth:api')->group(function () {
+    // Route to show a specific user
+    Route::get('/user/{id}', [UserController::class, 'show']);
+
+    // Route to list all users
+    Route::get('/users', [UserController::class, 'index']);
+
+    // Route to create a new user
+    Route::post('/users', [UserController::class, 'store']);
+
+    // Route to update an existing user
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+    // Route to delete an existing user
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
+});
+//Route::apiResource('users', UserController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Authentification
+|--------------------------------------------------------------------------
+|
+|
+*/
 Route::namespace('Api')->group(function (){
 
     Route::prefix('auth')->group(function (){
         Route::post('login', [AuthController::class, 'login']);
         Route::post('register', [AuthController::class, 'register']);
     });
+
     Route::group([
         'middleware'=> 'auth:api'
     ],function (){

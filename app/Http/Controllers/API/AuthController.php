@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    //http://localhost:8000/api/auth/login
 //public function login(){
 //    echo "login endpoint";
 //}
@@ -36,6 +35,7 @@ class AuthController extends Controller
 //
 //}
 
+    //http://localhost:8000/api/auth/login
 public function login(Request $request){
     $credentials = request(['email','password']);
 
@@ -74,13 +74,17 @@ public function login(Request $request){
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+//        $user->roles()->attach($defaultRole);
+
 
         return response()->json([
             "message" => "User registered successfully"
         ], 201);
     }
-//http://localhost:8000/api/logout
 
+
+
+//http://localhost:8000/api/logout
     public function logout(Request $request){
     $request->user()->token()->revoke();
     return response()->json([

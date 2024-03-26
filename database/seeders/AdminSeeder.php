@@ -26,5 +26,7 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('admin@gmail.com'),
             'role_id' => $adminRole->id,
         ]);
+//        $admin->roles()->attach($adminRole);
+
     }
 }

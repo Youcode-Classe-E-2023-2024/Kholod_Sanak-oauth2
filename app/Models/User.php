@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'role_id',
     ];
 
     /**
@@ -45,12 +45,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles()
+//    public function roles()
+//    {
+//        return $this->belongsToMany(Role::class);
+//    }
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo(Role::class);
     }
+
     public function hasRole($role)
     {
-        return $this->roles()->where('name', $role)->exists();
+        return $this->role()->where('name', $role)->exists();
     }
+
+
 }

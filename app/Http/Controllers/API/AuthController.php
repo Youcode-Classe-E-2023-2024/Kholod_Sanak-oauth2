@@ -14,27 +14,6 @@ class AuthController extends Controller
 //public function login(){
 //    echo "login endpoint";
 //}
-
-//public function login(Request $request){
-//        $credentials = $request->only('email', 'password');
-//
-//        if (Auth::attempt($credentials)) {
-//            $user = Auth::user();
-//            $token = $user->createToken('OAuth')->accessToken;
-//
-//            return response()->json([
-//                'token' => $token,
-//                'email'=> $request->email,
-//                'message' => 'Login successful'
-//            ], 200);
-//        }
-//
-//        return response()->json([
-//            'message' => 'Unauthorized'
-//        ], 401);
-//
-//}
-
     //http://localhost:8000/api/auth/login
 public function login(Request $request){
     $credentials = request(['email','password']);
@@ -74,8 +53,6 @@ public function login(Request $request){
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-//        $user->roles()->attach($defaultRole);
-
 
         return response()->json([
             "message" => "User registered successfully"

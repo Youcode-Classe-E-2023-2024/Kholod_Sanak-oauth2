@@ -29,6 +29,7 @@ public function login(Request $request){
     return response()->json([
         'message' => 'Login successful',
         ' user'=>$user,
+        'token'=> $user->access_token,
     ],200);
 
 }

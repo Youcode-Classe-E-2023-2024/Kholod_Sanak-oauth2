@@ -9,8 +9,151 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
+/**
+ * @OA\Get(
+ *     path="/api/users",
+ *     tags={"Users"},
+ *     summary="Get all users",
+ *     description="Returns a list of all users.",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(ref="#/components/schemas/User")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated"
+ *     )
+ * )
+ *
+ * @OA\Get(
+ *     path="/api/user/{id}",
+ *     tags={"Users"},
+ *     summary="Get user by ID",
+ *     description="Returns a specific user by ID.",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the user",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="User not found"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated"
+ *     )
+ * )
+ *
+ * @OA\Post(
+ *     path="/api/users",
+ *     tags={"Users"},
+ *     summary="Create a new user",
+ *     description="Creates a new user with the provided data.",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="User created successfully",
+ *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Validation error"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated"
+ *     )
+ * )
+ *
+ * @OA\Put(
+ *     path="/api/users/{id}",
+ *     tags={"Users"},
+ *     summary="Update an existing user",
+ *     description="Updates an existing user with the provided data.",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the user",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User updated successfully",
+ *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="User not found"
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Validation error"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated"
+ *     )
+ * )
+ *
+ * @OA\Delete(
+ *     path="/api/users/{id}",
+ *     tags={"Users"},
+ *     summary="Delete a user",
+ *     description="Deletes an existing user by ID.",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the user",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User deleted successfully"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="User not found"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthenticated"
+ *     )
+ * )
+ */
+
+
+
+
 class UserController extends Controller
 {
+
 //Méthode pour afficher tous les utilisateurs
 //http://localhost:8000/api/users
     public function index()
@@ -27,8 +170,7 @@ class UserController extends Controller
 //        return response()->json($users);
 //    }
 
-    // Méthode pour afficher un utilisateur spécifique
-    //http://127.0.0.1:8000/api/user/5
+
     public function show(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -37,8 +179,7 @@ class UserController extends Controller
     }
 
 
-    // Méthode pour créer un nouvel utilisateur
-    //http://localhost:8000/api/users
+
     public function store(Request $request)
     {
         $this->authorize('create', User::class);
@@ -76,6 +217,8 @@ class UserController extends Controller
 
     // Méthode pour mettre à jour un utilisateur existant
 //    http://localhost:8000/api/users/{id}
+
+
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -92,6 +235,8 @@ class UserController extends Controller
     }
 
     // Méthode pour supprimer un utilisateur
+
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);

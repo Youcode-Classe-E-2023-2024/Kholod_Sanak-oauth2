@@ -21,6 +21,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+//    public function index()
+//    {
+//        $users = User::all();
+//        return response()->json($users);
+//    }
+
     // Méthode pour afficher un utilisateur spécifique
     //http://127.0.0.1:8000/api/user/5
     public function show(Request $request, $id)

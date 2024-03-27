@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 |
 |
 */
+
+
 Route::middleware('auth:api')->group(function () {
     // Route to show a specific user
     Route::get('/user/{id}', [UserController::class, 'show']);
@@ -44,6 +47,30 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 });
 //Route::apiResource('users', UserController::class);
+
+/*
+|--------------------------------------------------------------------------
+| CRUD Roles
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware('auth:api')->group(function () {
+    // Route to show a specific role
+    Route::get('/role/{id}', [RoleController::class, 'show']);
+
+    // Route to list all roles
+    Route::get('/roles', [RoleController::class, 'index']);
+
+    // Route to create a new role
+    Route::post('/roles', [RoleController::class, 'store']);
+
+    // Route to update an existing role
+    Route::put('/roles/{id}', [RoleController::class, 'update']);
+
+    // Route to delete an existing role
+    Route::delete('/roles/{id}', [RoleController::class, 'destroy']);
+});
 
 /*
 |--------------------------------------------------------------------------

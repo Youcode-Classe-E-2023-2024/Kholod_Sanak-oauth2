@@ -81,6 +81,16 @@ Route::middleware('auth:api')->group(function () {
 */
 Route::namespace('Api')->group(function (){
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Forgot-password
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/forgotPassword', [AuthController::class, 'forgotPassword']);
+    Route::get('/mot-de-passe/reinitialiser/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/mot-de-passe/reset/', [AuthController::class, 'reset']);
+
     Route::prefix('auth')->group(function (){
         Route::post('login', [AuthController::class, 'login']);
         Route::post('register', [AuthController::class, 'register']);
@@ -93,3 +103,5 @@ Route::namespace('Api')->group(function (){
         Route::post('logout',[AuthController::class,'logout']);
     });
 });
+
+
